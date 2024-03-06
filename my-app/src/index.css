@@ -16,15 +16,19 @@ html {
   font-weight: 400;
   font-size: 18px;
   line-height: 26px;
-  font-family: "Inter", "Arial", sans-serif;
-  color: #000000;
+  font-family: "Arial", sans-serif;
+  color: #ffffff;
   scroll-behavior: smooth;
 }
 
 body {
   width: 100%;
   height: 100%;
-  background-color: blueviolet;
+  background: linear-gradient(
+    360deg,
+    rgba(0, 212, 255, 1) 10%,
+    rgba(9, 32, 121, 1) 100%
+  );
 }
 
 a {
@@ -40,16 +44,15 @@ svg {
   object-fit: cover;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
 }
