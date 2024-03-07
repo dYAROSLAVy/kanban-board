@@ -1,7 +1,16 @@
+import "./main.css";
+import COLUMNS from "../mocks/columns";
+import Column from "../column/column";
+
 function Main() {
   return (
-    <main>
-      <h1 className="visually-hidden">Альтернативная канбан доска</h1>
+    <main className="main">
+      <h1 className="main__title">My board</h1>
+      <div className="main__board">
+        {COLUMNS.map(({ title }) => (
+          <Column title={title} />
+        ))}
+      </div>
     </main>
   );
 }
