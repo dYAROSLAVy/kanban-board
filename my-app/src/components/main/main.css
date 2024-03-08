@@ -1,0 +1,14 @@
+.main__title {
+  margin: 0 0 12px;
+  padding: 12px;
+  font-size: 18px;
+  line-height: 32px;
+}
+
+.main__board {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px;
+}

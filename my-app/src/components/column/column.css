@@ -1,0 +1,26 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 272px;
+  padding: 8px;
+  color: #000000;
+  background-color: #ffffff;
+  border-radius: 16px;
+}
+
+.column__title {
+  margin: 0;
+  padding: 6px 8px 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  border-radius: 16px;
+}
+
+.column__card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
