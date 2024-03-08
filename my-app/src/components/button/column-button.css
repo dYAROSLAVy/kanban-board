@@ -1,0 +1,98 @@
+.column-button__button,
+.column-button__button-close {
+  min-height: 32px;
+  background-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  border-radius: 16px;
+}
+
+.column-button__button {
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 6px 12px 6px 8px;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.column-button__button-close {
+  width: 32px;
+}
+
+.column-button__text {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.column-button__text::before,
+.column-button__text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 12px;
+  height: 1px;
+  background-color: #000000;
+}
+
+.column-button__text::after {
+  transform: rotate(90deg);
+}
+
+.column-button__button-close-decor {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.column-button__button-close-decor::before,
+.column-button__button-close-decor::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 1px;
+  background-color: #000000;
+}
+
+.column-button__button-close-decor::before {
+  transform: rotate(45deg);
+}
+
+.column-button__button-close-decor::after {
+  transform: rotate(-45deg);
+}
+
+.column-button__textarea {
+  width: 100%;
+  padding: 10px;
+  min-height: 76px;
+  border: none;
+  resize: none;
+  background-color: #f8f8ff;
+  border-radius: 16px;
+}
+
+.column-button__buttons-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.column-button__buttons-wrapper .column-button__button {
+  width: fit-content;
+  background-color: #f8f8ff;
+}
+
+.column-button__buttons-wrapper .column-button__text {
+  padding-left: 0;
+}
+
+.column-button__buttons-wrapper .column-button__text::before,
+.column-button__buttons-wrapper .column-button__text::after {
+  display: none;
+}
