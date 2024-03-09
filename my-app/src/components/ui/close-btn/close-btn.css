@@ -1,0 +1,33 @@
+.close-btn {
+  width: 32px;
+  min-height: 32px;
+  background-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  border-radius: 16px;
+}
+
+.close-btn__decor {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn__decor::before,
+.close-btn__decor::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 1px;
+  background-color: #000000;
+}
+
+.close-btn__decor::before {
+  transform: rotate(45deg);
+}
+
+.close-btn__decor::after {
+  transform: rotate(-45deg);
+}

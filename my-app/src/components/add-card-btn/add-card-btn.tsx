@@ -1,7 +1,8 @@
 import { useState, useRef, ElementRef } from "react";
-import "./column-button.css";
+import "./add-card-btn.css";
+import CloseBtn from "../ui/close-btn/close-btn";
 
-function ColumnButton({ addCard }: { addCard?: (title: string) => void }) {
+function AddCardBtn({ addCard }: { addCard?: (title: string) => void }) {
   const [showArea, setShowArea] = useState(false);
   const textareaRef = useRef<ElementRef<"textarea">>(null);
 
@@ -44,12 +45,7 @@ function ColumnButton({ addCard }: { addCard?: (title: string) => void }) {
             >
               <span className="column-button__text">Add a card</span>
             </button>
-            <button
-              className="column-button__button-close"
-              onClick={closeTextArea}
-            >
-              <span className="column-button__button-close-decor"></span>
-            </button>
+            <CloseBtn close={closeTextArea} />
           </div>
         </>
       )}
@@ -57,4 +53,4 @@ function ColumnButton({ addCard }: { addCard?: (title: string) => void }) {
   );
 }
 
-export default ColumnButton;
+export default AddCardBtn;
