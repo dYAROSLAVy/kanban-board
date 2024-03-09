@@ -19,7 +19,7 @@ function ColumnButton({ addCard }: { addCard?: (title: string) => void }) {
       if (cardTitle.length !== 0) {
         addCard?.(cardTitle);
         closeTextArea();
-      }
+      } else closeTextArea();
     }
   }
 
