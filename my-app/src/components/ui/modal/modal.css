@@ -1,0 +1,28 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vw;
+  background-color: #000000a3;
+  z-index: 1;
+}
+
+.modal__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 768px;
+  height: 827px;
+  margin: 50px auto 0;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+}

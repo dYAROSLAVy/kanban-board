@@ -1,6 +1,6 @@
 import "./column.css";
 import Card from "../card/card";
-import ColumnButton from "../button/column-button";
+import AddCardBtn from "../add-card/add-card";
 import { useState } from "react";
 
 function Column({
@@ -23,10 +23,10 @@ function Column({
       </h2>
       <div className="column__card-list">
         {columnCards.map(({ cardTitle }) => (
-          <Card title={cardTitle} />
+          <Card title={cardTitle} columnTitle={title} />
         ))}
       </div>
-      <ColumnButton addCard={addCard} />
+      <AddCardBtn addCard={addCard} />
     </div>
   );
 }

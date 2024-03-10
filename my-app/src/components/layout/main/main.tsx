@@ -1,6 +1,6 @@
 import "./main.css";
-import COLUMNS from "../mocks/mocks";
-import Column from "../column/column";
+import COLUMNS from "../../mocks/mocks";
+import Column from "../../ui/column/column";
 
 function Main() {
   return (

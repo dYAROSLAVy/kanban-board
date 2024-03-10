@@ -1,0 +1,22 @@
+.buttons-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.buttons-wrapper__add {
+  width: fit-content;
+  background-color: #f8f8ff;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.buttons-wrapper__add-text {
+  padding-left: 0;
+}
+
+.buttons-wrapper__add-text::before,
+.buttons-wrapper__add-text::after {
+  display: none;
+}

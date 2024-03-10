@@ -1,7 +1,8 @@
 import { useState, useRef, ElementRef } from "react";
-import "./column-button.css";
+import "./add-card.css";
+import AddAndCloseBtns from "../add-and-close-btns/add-and-close-btns";
 
-function ColumnButton({ addCard }: { addCard?: (title: string) => void }) {
+function AddCardBtn({ addCard }: { addCard?: (title: string) => void }) {
   const [showArea, setShowArea] = useState(false);
   const textareaRef = useRef<ElementRef<"textarea">>(null);
 
@@ -19,7 +20,7 @@ function ColumnButton({ addCard }: { addCard?: (title: string) => void }) {
       if (cardTitle.length !== 0) {
         addCard?.(cardTitle);
         closeTextArea();
-      }
+      } else closeTextArea();
     }
   }
 
@@ -37,24 +38,11 @@ function ColumnButton({ addCard }: { addCard?: (title: string) => void }) {
             className="column-button__textarea"
             placeholder="Enter the card title"
           />
-          <div className="column-button__buttons-wrapper">
-            <button
-              className="column-button__button"
-              onClick={handleAddCardClick}
-            >
-              <span className="column-button__text">Add a card</span>
-            </button>
-            <button
-              className="column-button__button-close"
-              onClick={closeTextArea}
-            >
-              <span className="column-button__button-close-decor"></span>
-            </button>
-          </div>
+          <AddAndCloseBtns text='Add a card' add={handleAddCardClick} close={closeTextArea} />
         </>
       )}
     </div>
   );
 }
 
-export default ColumnButton;
+export default AddCardBtn;
