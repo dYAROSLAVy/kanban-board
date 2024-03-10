@@ -1,6 +1,6 @@
 import { useState, useRef, ElementRef } from "react";
-import "./add-card-btn.css";
-import CloseBtn from "../ui/close-btn/close-btn";
+import "./add-card.css";
+import AddAndCloseBtns from "../add-and-close-btns/add-and-close-btns";
 
 function AddCardBtn({ addCard }: { addCard?: (title: string) => void }) {
   const [showArea, setShowArea] = useState(false);
@@ -38,15 +38,7 @@ function AddCardBtn({ addCard }: { addCard?: (title: string) => void }) {
             className="column-button__textarea"
             placeholder="Enter the card title"
           />
-          <div className="column-button__buttons-wrapper">
-            <button
-              className="column-button__button"
-              onClick={handleAddCardClick}
-            >
-              <span className="column-button__text">Add a card</span>
-            </button>
-            <CloseBtn close={closeTextArea} />
-          </div>
+          <AddAndCloseBtns text='Add a card' add={handleAddCardClick} close={closeTextArea} />
         </>
       )}
     </div>

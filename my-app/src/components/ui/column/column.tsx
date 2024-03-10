@@ -1,6 +1,6 @@
 import "./column.css";
 import Card from "../card/card";
-import AddCardBtn from "../add-card-btn/add-card-btn";
+import AddCardBtn from "../add-card/add-card";
 import { useState } from "react";
 
 function Column({
