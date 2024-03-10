@@ -17,7 +17,7 @@ function CardModal({
   const [showCommentsArea, setShowCommentsArea] = useState(false);
 
   const [descriptions, setDescriptions] = useState("");
-  const [comments, setComments] = useState(Array);
+  const [comments, setComments] = useState<string[]>([]);
   const descriptionTextareaRef = useRef<ElementRef<"textarea">>(null);
   const commentsTextareaRef = useRef<ElementRef<"textarea">>(null);
 
@@ -44,18 +44,22 @@ function CardModal({
       const description = descriptionTextareaRef.current.value;
       if (description.length !== 0) {
         setDescriptions(description);
-        closeDescriptionArea();
-      } else closeDescriptionArea();
+      } 
+      closeDescriptionArea();
     }
+  }
+
+  const addComment = (comment: string) => {
+    setComments([...comments, comment]);
   }
 
   function handleAddCommentClick() {
     if (commentsTextareaRef.current) {
       const comment = commentsTextareaRef.current.value;
       if (comment.length !== 0) {
-        setComments([...comments, comment]);
-        closeCommentsArea();
-      } else closeCommentsArea();
+        addComment(comment)
+      }  
+      closeCommentsArea();
     }
   }
 
