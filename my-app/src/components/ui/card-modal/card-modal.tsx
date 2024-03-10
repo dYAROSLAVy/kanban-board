@@ -1,6 +1,7 @@
 import { useState, useRef, ElementRef } from "react";
 import AddAndCloseBtns from "../add-and-close-btns/add-and-close-btns";
 import Modal from "../modal/modal";
+import Comment from "../comment/comment";
 import "./card-modal.css";
 
 function CardModal({
@@ -16,9 +17,11 @@ function CardModal({
   const [showCommentsArea, setShowCommentsArea] = useState(false);
 
   const [descriptions, setDescriptions] = useState("");
-  const textareaRef = useRef<ElementRef<"textarea">>(null);
+  const [comments, setComments] = useState(Array);
+  const descriptionTextareaRef = useRef<ElementRef<"textarea">>(null);
+  const commentsTextareaRef = useRef<ElementRef<"textarea">>(null);
 
-  const author = 'Yaroslav';
+  const author = "Yaroslav";
 
   const openDescriptionArea = () => {
     setShowDescriptionArea(true);
@@ -37,8 +40,8 @@ function CardModal({
   };
 
   function handleAddDescriptionClick() {
-    if (textareaRef.current) {
-      const description = textareaRef.current.value;
+    if (descriptionTextareaRef.current) {
+      const description = descriptionTextareaRef.current.value;
       if (description.length !== 0) {
         setDescriptions(description);
         closeDescriptionArea();
@@ -47,7 +50,13 @@ function CardModal({
   }
 
   function handleAddCommentClick() {
-    closeCommentsArea();
+    if (commentsTextareaRef.current) {
+      const comment = commentsTextareaRef.current.value;
+      if (comment.length !== 0) {
+        setComments([...comments, comment]);
+        closeCommentsArea();
+      } else closeCommentsArea();
+    }
   }
 
   return (
@@ -80,7 +89,7 @@ function CardModal({
           {showDescriptionArea && (
             <>
               <textarea
-                ref={textareaRef}
+                ref={descriptionTextareaRef}
                 className="card-modal__textarea"
                 placeholder="Enter the description"
                 value={descriptions}
@@ -104,14 +113,16 @@ function CardModal({
                 onClick={openCommentsArea}
                 tabIndex={0}
               >
-                {descriptions.length === 0 ? "Enter the comment" : descriptions}
+                <span className="card-modal__fake-description">
+                  Enter the comment
+                </span>
               </div>
             </>
           )}
           {showCommentsArea && (
             <>
               <textarea
-                ref={textareaRef}
+                ref={commentsTextareaRef}
                 className="card-modal__textarea"
                 placeholder="Enter the comment"
               />
@@ -122,9 +133,14 @@ function CardModal({
               />
             </>
           )}
+          <div className="card-modal__comments-list">
+            {comments.map((comment) => (
+              <Comment text={comment} author={author}/>
+            ))}
+          </div>
         </div>
       </Modal>
-    </>
+    </> 
   );
 }
 export default CardModal;
