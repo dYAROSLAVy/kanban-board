@@ -10,15 +10,17 @@ function Textarea({
   defaultValue,
   onChange,
   TextareaRef,
+  styles,
 }: {
-  close: () => void;
-  add: () => void;
-  text: string;
+  close?: () => void;
+  add?: () => void;
+  text?: string;
   placeholder?: string;
   value?: string;
   defaultValue?: string;
   onChange?: (e: any) => void;
   TextareaRef?: React.RefObject<HTMLTextAreaElement>;
+  styles?: {};
 }) {
   return (
     <>
@@ -29,6 +31,8 @@ function Textarea({
         onChange={onChange}
         ref={TextareaRef}
         defaultValue={defaultValue}
+        style={styles}
+        autoFocus
       />
       <AddAndCloseBtns text={text} close={close} add={add} />
     </>

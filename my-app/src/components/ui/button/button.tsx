@@ -5,9 +5,9 @@ function Button({
   onClick,
   styles,
 }: {
-  text: string;
+  text?: string;
   styles?: {};
-  onClick?: () => void;
+  onClick?: (index: number | any) => void;
 }) {
   return (
     <button className="button" onClick={onClick} style={styles}>

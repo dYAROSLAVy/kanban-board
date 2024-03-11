@@ -7,9 +7,9 @@ function AddAndCloseBtns({
   add,
   text,
 }: {
-  close: () => void;
-  add: () => void;
-  text: string;
+  close?: () => void;
+  add?: () => void;
+  text?: string;
 }) {
   return (
     <div className="buttons-wrapper">

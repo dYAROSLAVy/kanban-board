@@ -3,7 +3,15 @@ import "./comment.css";
 import Textarea from "../textarea/textarea";
 import Button from "../button/button";
 
-function Comment({ text, author }: { text: string; author: string }) {
+function Comment({
+  text,
+  author,
+  deleteComment,
+}: {
+  text: string;
+  author: string;
+  deleteComment: (index: number) => void;
+}) {
   const [showCommentArea, setShowCommentArea] = useState(false);
 
   const openCommentArea = () => {
@@ -23,7 +31,7 @@ function Comment({ text, author }: { text: string; author: string }) {
           <span>{text}</span>
           <div className="comment__btns-wrapper">
             <Button onClick={openCommentArea} text={"Edit a comment"} />
-            <Button text={"Delete a comment"} />
+            <Button onClick={deleteComment} text={"Delete a comment"} />
           </div>
         </>
       )}

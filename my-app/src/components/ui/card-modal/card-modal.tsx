@@ -13,6 +13,7 @@ function CardModal({
   columnTitle: string;
   title: string;
 }) {
+  const [showTitleArea, setShowTitleArea] = useState(false);
   const [showDescriptionArea, setShowDescriptionArea] = useState(false);
   const [showCommentsArea, setShowCommentsArea] = useState(false);
 
@@ -22,6 +23,14 @@ function CardModal({
   const commentsTextareaRef = useRef<ElementRef<"textarea">>(null);
 
   const author = "Yaroslav";
+
+  const openTitleArea = () => {
+    setShowTitleArea(true);
+  };
+
+  const closeTitleArea = () => {
+    setShowTitleArea(false);
+  };
 
   const openDescriptionArea = () => {
     setShowDescriptionArea(true);
@@ -53,6 +62,12 @@ function CardModal({
     setComments([...comments, comment]);
   };
 
+  const deleteComment = (index: number) => {
+    const newComments = [...comments];
+    newComments.splice(index, 1);
+    setComments(newComments);
+  };
+
   function handleAddCommentClick() {
     if (commentsTextareaRef.current) {
       const comment = commentsTextareaRef.current.value;
@@ -63,16 +78,34 @@ function CardModal({
     }
   }
 
-  const editComment = (index: number, newText: string) => {
-    const newComments = [...comments];
-    newComments[index] = newText;
-    setComments(newComments);
+  // const editComment = (index: number, newText: string) => {
+  //   const newComments = [...comments];
+  //   newComments[index] = newText;
+  //   setComments(newComments);
+  // };
+
+  const styles = {
+    height: "50px",
+    fontSize: "20px",
+    fontWeight: "700",
   };
 
   return (
     <>
       <Modal closeModal={closeModal}>
-        <h3 className="card-modal__title">{title}</h3>
+        {!showTitleArea && (
+          <h3 className="card-modal__title" onClick={openTitleArea}>
+            {title}
+          </h3>
+        )}
+        {showTitleArea && (
+          <Textarea
+            close={closeTitleArea}
+            defaultValue={title}
+            styles={styles}
+            text={"Edit a title"}
+          />
+        )}
         <p className="card-modal__text">
           In the column: <span>{columnTitle}</span>
           <span>Card creator: {author}</span>
@@ -138,8 +171,13 @@ function CardModal({
             </>
           )}
           <div className="card-modal__comments-list">
-            {comments.map((comment) => (
-              <Comment text={comment} author={author} />
+            {comments.map((comment, index) => (
+              <Comment
+                text={comment}
+                author={author}
+                deleteComment={deleteComment}
+                key={index}
+              />
             ))}
           </div>
         </div>
