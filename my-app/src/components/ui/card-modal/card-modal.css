@@ -1,6 +1,7 @@
 .card-modal__title {
   margin: 0;
   max-width: 95%;
+  cursor: text;
 }
 
 .card-modal__text {

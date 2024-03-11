@@ -21,11 +21,14 @@ function Column({
       <h2 className="column__title" tabIndex={0}>
         {title}
       </h2>
-      <div className="column__card-list">
-        {columnCards.map(({ cardTitle }) => (
-          <Card title={cardTitle} columnTitle={title} />
-        ))}
-      </div>
+      {columnCards.length !== 0 && (
+        <div className="column__card-list">
+          {columnCards.map(({ cardTitle }, index) => (
+            <Card title={cardTitle} columnTitle={title} key={index} />
+          ))}
+        </div>
+      )}
+
       <AddCard addCard={addCard} />
     </div>
   );

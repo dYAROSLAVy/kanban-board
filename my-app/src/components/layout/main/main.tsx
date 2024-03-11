@@ -7,8 +7,8 @@ function Main() {
     <main className="main">
       <h1 className="main__title">My board</h1>
       <div className="main__board">
-        {COLUMNS.map(({ title, cards }) => (
-          <Column title={title} cards={cards} />
+        {COLUMNS.map(({ title, cards }, index) => (
+          <Column title={title} cards={cards} key={index} />
         ))}
       </div>
     </main>
