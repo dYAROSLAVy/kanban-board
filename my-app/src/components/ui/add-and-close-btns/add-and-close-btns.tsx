@@ -1,20 +1,19 @@
+import Button from "../button/button";
 import CloseBtn from "../close-btn/close-btn";
 import "./add-and-close-btns.css";
 
 function AddAndCloseBtns({
   close,
   add,
-  text
+  text,
 }: {
   close: () => void;
   add: () => void;
-  text: string
+  text: string;
 }) {
   return (
     <div className="buttons-wrapper">
-      <button className="buttons-wrapper__add" onClick={add}>
-        <span className="buttons-wrapper__add-text">{text}</span>
-      </button>
+      <Button onClick={add} text={text} />
       <CloseBtn close={close} />
     </div>
   );

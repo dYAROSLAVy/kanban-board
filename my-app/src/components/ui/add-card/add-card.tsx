@@ -1,8 +1,8 @@
 import { useState, useRef, ElementRef } from "react";
-import "./add-card.css";
-import AddAndCloseBtns from "../add-and-close-btns/add-and-close-btns";
+import Textarea from "../textarea/textarea";
+import Button from "../button/button";
 
-function AddCardBtn({ addCard }: { addCard?: (title: string) => void }) {
+function AddCard({ addCard }: { addCard?: (title: string) => void }) {
   const [showArea, setShowArea] = useState(false);
   const textareaRef = useRef<ElementRef<"textarea">>(null);
 
@@ -25,24 +25,19 @@ function AddCardBtn({ addCard }: { addCard?: (title: string) => void }) {
   }
 
   return (
-    <div className="column-button">
-      {!showArea && (
-        <button className="column-button__button" onClick={openTextArea}>
-          <span className="column-button__text">Add a card</span>
-        </button>
-      )}
+    <>
+      {!showArea && <Button onClick={openTextArea} text={"Add a card"} />}
       {showArea && (
-        <>
-          <textarea
-            ref={textareaRef}
-            className="column-button__textarea"
-            placeholder="Enter the card title"
-          />
-          <AddAndCloseBtns text='Add a card' add={handleAddCardClick} close={closeTextArea} />
-        </>
+        <Textarea
+          placeholder={"Enter the card title"}
+          add={handleAddCardClick}
+          close={closeTextArea}
+          TextareaRef={textareaRef}
+          text={"Add a card"}
+        />
       )}
-    </div>
+    </>
   );
 }
 
-export default AddCardBtn;
+export default AddCard;

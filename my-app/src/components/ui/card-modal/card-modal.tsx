@@ -1,8 +1,8 @@
 import { useState, useRef, ElementRef } from "react";
-import AddAndCloseBtns from "../add-and-close-btns/add-and-close-btns";
 import Modal from "../modal/modal";
 import Comment from "../comment/comment";
 import "./card-modal.css";
+import Textarea from "../textarea/textarea";
 
 function CardModal({
   closeModal,
@@ -44,24 +44,30 @@ function CardModal({
       const description = descriptionTextareaRef.current.value;
       if (description.length !== 0) {
         setDescriptions(description);
-      } 
+      }
       closeDescriptionArea();
     }
   }
 
   const addComment = (comment: string) => {
     setComments([...comments, comment]);
-  }
+  };
 
   function handleAddCommentClick() {
     if (commentsTextareaRef.current) {
       const comment = commentsTextareaRef.current.value;
       if (comment.length !== 0) {
-        addComment(comment)
-      }  
+        addComment(comment);
+      }
       closeCommentsArea();
     }
   }
+
+  const editComment = (index: number, newText: string) => {
+    const newComments = [...comments];
+    newComments[index] = newText;
+    setComments(newComments);
+  };
 
   return (
     <>
@@ -92,17 +98,14 @@ function CardModal({
 
           {showDescriptionArea && (
             <>
-              <textarea
-                ref={descriptionTextareaRef}
-                className="card-modal__textarea"
-                placeholder="Enter the description"
-                value={descriptions}
-                onChange={(e) => setDescriptions(e.target.value)}
-              />
-              <AddAndCloseBtns
-                text="Add a description"
+              <Textarea
+                text={"Add a description"}
                 add={handleAddDescriptionClick}
                 close={closeDescriptionArea}
+                placeholder={"Enter the description"}
+                value={descriptions}
+                onChange={(e) => setDescriptions(e.target.value)}
+                TextareaRef={descriptionTextareaRef}
               />
             </>
           )}
@@ -125,26 +128,23 @@ function CardModal({
           )}
           {showCommentsArea && (
             <>
-              <textarea
-                ref={commentsTextareaRef}
-                className="card-modal__textarea"
-                placeholder="Enter the comment"
-              />
-              <AddAndCloseBtns
-                text="Add a comment"
+              <Textarea
+                text={"Add a comment"}
                 add={handleAddCommentClick}
                 close={closeCommentsArea}
+                placeholder={"Enter the comment"}
+                TextareaRef={commentsTextareaRef}
               />
             </>
           )}
           <div className="card-modal__comments-list">
             {comments.map((comment) => (
-              <Comment text={comment} author={author}/>
+              <Comment text={comment} author={author} />
             ))}
           </div>
         </div>
       </Modal>
-    </> 
+    </>
   );
 }
 export default CardModal;
