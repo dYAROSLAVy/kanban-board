@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "./card.css";
 import CardModal from "../card-modal/card-modal";
+import Button from "../button/button";
 
 function Card({ title, columnTitle }: { title: string; columnTitle: string }) {
   const [showModal, setShowCardModal] = useState(false);
@@ -13,11 +13,14 @@ function Card({ title, columnTitle }: { title: string; columnTitle: string }) {
     setShowCardModal(false);
   };
 
+  const styles = {
+    width: "100%",
+    textAlign: "left",
+  };
+
   return (
-    <div className="card">
-      <button className="card__button" onClick={openModal}>
-        {title}
-      </button>
+    <>
+      <Button onClick={openModal} text={title} styles={styles} />
       {showModal && (
         <CardModal
           title={title}
@@ -25,7 +28,7 @@ function Card({ title, columnTitle }: { title: string; columnTitle: string }) {
           closeModal={closeModal}
         />
       )}
-    </div>
+    </>
   );
 }
 
