@@ -1,6 +1,6 @@
 import { useState, useRef, ElementRef } from "react";
 import Textarea from "../textarea/textarea";
-import Button from "../button/button";
+import { Button } from "../button/button";
 
 function AddCard({ addCard }: { addCard?: (title: string) => void }) {
   const [showArea, setShowArea] = useState(false);
@@ -32,7 +32,7 @@ function AddCard({ addCard }: { addCard?: (title: string) => void }) {
           placeholder={"Enter the card title"}
           add={handleAddCardClick}
           close={closeTextArea}
-          TextareaRef={textareaRef}
+          textareaRef={textareaRef}
           text={"Add a card"}
         />
       )}

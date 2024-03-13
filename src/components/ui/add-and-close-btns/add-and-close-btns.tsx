@@ -1,4 +1,4 @@
-import Button from "../button/button";
+import { Button } from "../button/button";
 import CloseBtn from "../close-btn/close-btn";
 import "./add-and-close-btns.css";
 

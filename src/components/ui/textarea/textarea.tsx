@@ -1,5 +1,6 @@
 import AddAndCloseBtns from "../add-and-close-btns/add-and-close-btns";
 import "./textarea.css";
+import {HTMLAttributes} from 'react';
 
 function Textarea({
   close,
@@ -8,9 +9,9 @@ function Textarea({
   placeholder,
   value,
   defaultValue,
-  onChange,
-  TextareaRef,
+  textareaRef,
   styles,
+  onChange
 }: {
   close?: () => void;
   add?: () => void;
@@ -18,10 +19,9 @@ function Textarea({
   placeholder?: string;
   value?: string;
   defaultValue?: string;
-  onChange?: (e: any) => void;
-  TextareaRef?: React.RefObject<HTMLTextAreaElement>;
+  textareaRef?: React.RefObject<HTMLTextAreaElement>;
   styles?: {};
-}) {
+} & HTMLAttributes<HTMLTextAreaElement>) {
   return (
     <>
       <textarea
@@ -29,7 +29,7 @@ function Textarea({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        ref={TextareaRef}
+        ref={textareaRef}
         defaultValue={defaultValue}
         style={styles}
         autoFocus
