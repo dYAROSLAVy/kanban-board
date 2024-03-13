@@ -1,19 +1,17 @@
+import { FC, MouseEvent } from "react";
 import "./button.css";
 
-function Button({
-  text,
-  onClick,
-  styles,
-}: {
+export type ButtonProps = {
   text?: string;
   styles?: {};
-  onClick?: (index: number | any) => void;
-}) {
+  onClick?: (evt: MouseEvent<HTMLButtonElement>) => void;
+};
+
+export const Button: FC<ButtonProps> = (props) => {
+  const { onClick, styles, text } = props;
   return (
     <button className="button" onClick={onClick} style={styles}>
       <span className="buttons-wrapper__add-text">{text}</span>
     </button>
   );
-}
-
-export default Button;
+};

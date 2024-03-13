@@ -1,28 +1,41 @@
-import { useState, useRef, ElementRef } from "react";
+import { useState, useRef, ElementRef, FC } from "react";
 import Modal from "../modal/modal";
-import Comment from "../comment/comment";
+import { Comment } from "../comment/comment";
 import "./card-modal.css";
 import Textarea from "../textarea/textarea";
+import { CardProps } from "../card/card";
+import { Button } from "../button/button";
 
-function CardModal({
-  closeModal,
-  columnTitle,
-  title,
-}: {
+export type CardModalProps = CardProps & {
   closeModal: () => void;
   columnTitle: string;
-  title: string;
-}) {
+  userName: string;
+};
+
+export const CardModal: FC<CardModalProps> = (props) => {
+  const {
+    cardTitle,
+    closeModal,
+    cardIndex,
+    addCommentToCard,
+    addDescriptionToCard,
+    deleteCommentFromCard,
+    editCommentFromCard,
+    editCardTitle,
+    deleteCard,
+    columnTitle,
+    userName,
+    comments,
+    description,
+  } = props;
+
   const [showTitleArea, setShowTitleArea] = useState(false);
   const [showDescriptionArea, setShowDescriptionArea] = useState(false);
   const [showCommentsArea, setShowCommentsArea] = useState(false);
 
-  const [descriptions, setDescriptions] = useState("");
-  const [comments, setComments] = useState<string[]>([]);
+  const titleTextareaRef = useRef<ElementRef<"textarea">>(null);
   const descriptionTextareaRef = useRef<ElementRef<"textarea">>(null);
   const commentsTextareaRef = useRef<ElementRef<"textarea">>(null);
-
-  const author = "Yaroslav";
 
   const openTitleArea = () => {
     setShowTitleArea(true);
@@ -52,37 +65,33 @@ function CardModal({
     if (descriptionTextareaRef.current) {
       const description = descriptionTextareaRef.current.value;
       if (description.length !== 0) {
-        setDescriptions(description);
+        addDescriptionToCard(cardIndex, description);
       }
       closeDescriptionArea();
     }
   }
 
-  const addComment = (comment: string) => {
-    setComments([...comments, comment]);
-  };
-
-  const deleteComment = (index: number) => {
-    const newComments = [...comments];
-    newComments.splice(index, 1);
-    setComments(newComments);
-  };
-
   function handleAddCommentClick() {
     if (commentsTextareaRef.current) {
       const comment = commentsTextareaRef.current.value;
       if (comment.length !== 0) {
-        addComment(comment);
+        addCommentToCard(cardIndex, comment);
       }
       closeCommentsArea();
     }
   }
 
-  // const editComment = (index: number, newText: string) => {
-  //   const newComments = [...comments];
-  //   newComments[index] = newText;
-  //   setComments(newComments);
-  // };
+  const onEditTitleClick = () => {
+    if (titleTextareaRef.current) {
+      const cardTitle = titleTextareaRef.current.value;
+      editCardTitle(cardIndex, cardTitle);
+    }
+    closeTitleArea();
+  };
+
+  const onDeleteCardClick = () => {
+    deleteCard(cardIndex);
+  };
 
   const styles = {
     height: "50px",
@@ -95,20 +104,22 @@ function CardModal({
       <Modal closeModal={closeModal}>
         {!showTitleArea && (
           <h3 className="card-modal__title" onClick={openTitleArea}>
-            {title}
+            {cardTitle}
           </h3>
         )}
         {showTitleArea && (
           <Textarea
             close={closeTitleArea}
-            defaultValue={title}
+            defaultValue={cardTitle}
             styles={styles}
             text={"Edit a title"}
+            textareaRef={titleTextareaRef}
+            add={onEditTitleClick}
           />
         )}
         <p className="card-modal__text">
           In the column: <span>{columnTitle}</span>
-          <span>Card creator: {author}</span>
+          <span>Card creator: {userName}</span>
         </p>
 
         <div className="card-modal__description">
@@ -121,9 +132,9 @@ function CardModal({
                 tabIndex={0}
               >
                 <span className="card-modal__fake-description">
-                  {descriptions.length === 0
+                  {description.length === 0
                     ? "Enter the description"
-                    : descriptions}
+                    : description}
                 </span>
               </div>
             </>
@@ -136,9 +147,8 @@ function CardModal({
                 add={handleAddDescriptionClick}
                 close={closeDescriptionArea}
                 placeholder={"Enter the description"}
-                value={descriptions}
-                onChange={(e) => setDescriptions(e.target.value)}
-                TextareaRef={descriptionTextareaRef}
+                defaultValue={description}
+                textareaRef={descriptionTextareaRef}
               />
             </>
           )}
@@ -166,23 +176,28 @@ function CardModal({
                 add={handleAddCommentClick}
                 close={closeCommentsArea}
                 placeholder={"Enter the comment"}
-                TextareaRef={commentsTextareaRef}
+                textareaRef={commentsTextareaRef}
               />
             </>
           )}
           <div className="card-modal__comments-list">
             {comments.map((comment, index) => (
               <Comment
-                text={comment}
-                author={author}
-                deleteComment={deleteComment}
                 key={index}
+                cardIndex={cardIndex}
+                commentIndex={index}
+                text={comment}
+                userName={userName}
+                deleteCommentFromCard={deleteCommentFromCard}
+                editCommentFromCard={editCommentFromCard}
               />
             ))}
           </div>
         </div>
+
+        <Button text={"Delete a card"} onClick={onDeleteCardClick} />
       </Modal>
     </>
   );
-}
+};
 export default CardModal;

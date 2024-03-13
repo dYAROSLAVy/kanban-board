@@ -1,8 +1,26 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import CardModal from "../card-modal/card-modal";
-import Button from "../button/button";
+import { Button } from "../button/button";
+import { CardType } from "./types";
 
-function Card({ title, columnTitle }: { title: string; columnTitle: string }) {
+export type CardProps = CardType & {
+  cardIndex: number;
+  userName: string;
+  columnTitle: string;
+  editCommentFromCard: (
+    cardIndex: number,
+    commentIndex: number,
+    newText: string
+  ) => void;
+  addDescriptionToCard: (cardIndex: number, text: string) => void;
+  deleteCommentFromCard: (cardIndex: number, commentIndex: number) => void;
+  addCommentToCard: (cardIndex: number, commentText: string) => void;
+  editCardTitle: (cardIndex: number, cardTitle: string) => void;
+  deleteCard: (index: number) => void;
+};
+
+export const Card: FC<CardProps> = (props) => {
+  const { cardTitle } = props;
   const [showModal, setShowCardModal] = useState(false);
 
   const openModal = () => {
@@ -20,16 +38,8 @@ function Card({ title, columnTitle }: { title: string; columnTitle: string }) {
 
   return (
     <>
-      <Button onClick={openModal} text={title} styles={styles} />
-      {showModal && (
-        <CardModal
-          title={title}
-          columnTitle={columnTitle}
-          closeModal={closeModal}
-        />
-      )}
+      <Button onClick={openModal} text={cardTitle} styles={styles} />
+      {showModal && <CardModal closeModal={closeModal} {...props} />}
     </>
   );
-}
-
-export default Card;
+};
