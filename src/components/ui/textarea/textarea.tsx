@@ -1,18 +1,8 @@
-import AddAndCloseBtns from "../add-and-close-btns/add-and-close-btns";
+import { AddAndCloseBtns } from "../add-and-close-btns/add-and-close-btns";
 import "./textarea.css";
-import {HTMLAttributes} from 'react';
+import { FC } from "react";
 
-function Textarea({
-  close,
-  add,
-  text,
-  placeholder,
-  value,
-  defaultValue,
-  textareaRef,
-  styles,
-  onChange
-}: {
+export type TextareaProps = {
   close?: () => void;
   add?: () => void;
   text?: string;
@@ -21,7 +11,21 @@ function Textarea({
   defaultValue?: string;
   textareaRef?: React.RefObject<HTMLTextAreaElement>;
   styles?: {};
-} & HTMLAttributes<HTMLTextAreaElement>) {
+  onChange?: React.FormEventHandler<HTMLTextAreaElement>;
+};
+
+export const Textarea: FC<TextareaProps> = (props) => {
+  const {
+    close,
+    placeholder,
+    value,
+    onChange,
+    textareaRef,
+    defaultValue,
+    styles,
+    add,
+    text,
+  } = props;
   return (
     <>
       <textarea
@@ -37,6 +41,4 @@ function Textarea({
       <AddAndCloseBtns text={text} close={close} add={add} />
     </>
   );
-}
-
-export default Textarea;
+};

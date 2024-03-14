@@ -1,5 +1,5 @@
-import Modal from "../modal/modal";
-import Textarea from "../textarea/textarea";
+import { Modal } from "../modal/modal";
+import {Textarea} from "../textarea/textarea";
 import "./name-modal.css";
 
 export const NameModal = ({
@@ -12,9 +12,16 @@ export const NameModal = ({
   nameTextareaRef: React.RefObject<HTMLTextAreaElement>;
 }) => {
   return (
-    <Modal closeModal={closeModal}>
-      <Textarea add={onAddNameClick} textareaRef={nameTextareaRef}></Textarea>
-    </Modal>
+    <div className="name-modal">
+      <Modal closeModal={closeModal}>
+        <h2>Enter your name</h2>
+        <Textarea
+          add={onAddNameClick}
+          close={closeModal}
+          text={"Add a name"}
+          textareaRef={nameTextareaRef}
+        ></Textarea>
+      </Modal>
+    </div>
   );
 };
-export default NameModal;

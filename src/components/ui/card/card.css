@@ -1,0 +1,12 @@
+.card {
+    position: relative;
+}
+
+
+.card__comment-count {
+    position: absolute;
+    top: 39%;
+    right: 10px;
+    line-height: 10px;
+    font-size: 10px;
+}

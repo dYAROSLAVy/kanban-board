@@ -1,6 +1,6 @@
 import { useState, useRef, ElementRef, FC } from "react";
 import "./comment.css";
-import Textarea from "../textarea/textarea";
+import {Textarea} from "../textarea/textarea";
 import { Button } from "../button/button";
 import { CommentType } from "./types";
 
@@ -51,7 +51,7 @@ export const Comment: FC<CommentProps> = (props) => {
 
   return (
     <div className="comment">
-      <span className="comment__author">{userName}</span>
+      <span className="comment__author">{userName ? userName : "Anonymous"}</span>
 
       {!showCommentArea && (
         <>

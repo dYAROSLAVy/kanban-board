@@ -1,11 +1,9 @@
-import PageWrapper from "../layout/page-wrapper/page-wrapper";
+import { PageWrapper } from "../layout/page-wrapper/page-wrapper";
 
-function App() {
+export const App = () => {
   return (
     <div className="App">
       <PageWrapper />
     </div>
   );
-}
-
-export default App;
+};
