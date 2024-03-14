@@ -1,0 +1,14 @@
+.name-modal .modal__inner {
+  align-items: center;
+  gap: 25px;
+  min-height: 300px;
+  margin: 20% auto;
+}
+
+.name-modal h2 {
+  color: #000000;
+}
+
+.name-modal textarea {
+    height: 42px;
+}

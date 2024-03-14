@@ -16,6 +16,19 @@
   font-weight: 600;
   line-height: 20px;
   border-radius: 16px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f8f8ff;
+  cursor: text;
+}
+
+.column__title:hover,
+.column__title:focus {
+  background-color: #f5f5f5;
+}
+
+.column__title:active {
+  background-color: #dcdcdc;
 }
 
 .column__card-list {
@@ -23,4 +36,3 @@
   flex-direction: column;
   gap: 15px;
 }
-

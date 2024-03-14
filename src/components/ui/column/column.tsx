@@ -1,9 +1,10 @@
 import "./column.css";
 import { Card } from "../card/card";
-import AddCard from "../add-card/add-card";
+import { AddCard } from "../add-card/add-card";
 import { FC, useState, useRef, ElementRef } from "react";
 import { ColumnType } from "./types";
-import Textarea from "../textarea/textarea";
+import { Textarea } from "../textarea/textarea";
+import { setCardToLocalStorage } from "../../utils/local-storage";
 
 export type ColumnProps = ColumnType & {
   userName: string;
@@ -26,7 +27,7 @@ export const Column: FC<ColumnProps> = (props) => {
     setShowColumnTextArea(false);
   };
 
-  function handleEditTitleClick() {
+  const onEditTitleClick = () => {
     if (columnTitleTextareaRef.current) {
       const newTitle = columnTitleTextareaRef.current.value;
       if (newTitle.length !== 0) {
@@ -34,47 +35,47 @@ export const Column: FC<ColumnProps> = (props) => {
       }
       closeColumnTitleArea();
     }
-  }
+  };
 
   const addCard = (cardTitle: string) => {
-    setColumnCards([
-      ...columnCards,
-      {
-        cardTitle,
-        comments: [],
-        description: "",
-      },
-    ]);
+    const newCards = [...columnCards, { cardTitle, comments: [] }];
+    setColumnCards(newCards);
+    setCardToLocalStorage(columnIndex, newCards);
   };
-  
+
   const deleteCard = (index: number) => {
     const newCards = [...columnCards];
     newCards.splice(index, 1);
     setColumnCards(newCards);
+    setCardToLocalStorage(columnIndex, newCards);
   };
 
   const editCardTitle = (cardIndex: number, cardTitle: string) => {
     const newCards = [...columnCards];
     newCards[cardIndex].cardTitle = cardTitle;
     setColumnCards(newCards);
+    setCardToLocalStorage(columnIndex, newCards);
   };
 
   const addDescriptionToCard = (cardIndex: number, text: string) => {
     const newCards = [...columnCards];
     newCards[cardIndex].description = text;
     setColumnCards(newCards);
+    setCardToLocalStorage(columnIndex, newCards);
   };
 
   const addCommentToCard = (cardIndex: number, text: string) => {
     const newCards = [...columnCards];
     newCards[cardIndex].comments.push(text);
     setColumnCards(newCards);
+    setCardToLocalStorage(columnIndex, newCards);
   };
 
   const deleteCommentFromCard = (cardIndex: number, commentIndex: number) => {
     const newCards = [...columnCards];
     newCards[cardIndex].comments.splice(commentIndex, 1);
     setColumnCards(newCards);
+    setCardToLocalStorage(columnIndex, newCards);
   };
 
   const editCommentFromCard = (
@@ -85,6 +86,7 @@ export const Column: FC<ColumnProps> = (props) => {
     const newCards = [...columnCards];
     newCards[cardIndex].comments[commentIndex] = newText;
     setColumnCards(newCards);
+    setCardToLocalStorage(columnIndex, newCards);
   };
 
   const styles = {
@@ -111,7 +113,7 @@ export const Column: FC<ColumnProps> = (props) => {
           text={"Edit a title"}
           close={closeColumnTitleArea}
           textareaRef={columnTitleTextareaRef}
-          add={handleEditTitleClick}
+          add={onEditTitleClick}
         />
       )}
       {columnCards.length !== 0 && (

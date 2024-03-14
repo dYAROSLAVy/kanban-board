@@ -1,15 +1,13 @@
 import { useState, useRef, ElementRef, FC } from "react";
-import Modal from "../modal/modal";
+import { Modal } from "../modal/modal";
 import { Comment } from "../comment/comment";
 import "./card-modal.css";
-import Textarea from "../textarea/textarea";
+import { Textarea } from "../textarea/textarea";
 import { CardProps } from "../card/card";
 import { Button } from "../button/button";
 
 export type CardModalProps = CardProps & {
   closeModal: () => void;
-  columnTitle: string;
-  userName: string;
 };
 
 export const CardModal: FC<CardModalProps> = (props) => {
@@ -61,17 +59,15 @@ export const CardModal: FC<CardModalProps> = (props) => {
     setShowCommentsArea(false);
   };
 
-  function handleAddDescriptionClick() {
+  const onAddDescriptionClick = () => {
     if (descriptionTextareaRef.current) {
       const description = descriptionTextareaRef.current.value;
-      if (description.length !== 0) {
-        addDescriptionToCard(cardIndex, description);
-      }
+      addDescriptionToCard(cardIndex, description);
       closeDescriptionArea();
     }
-  }
+  };
 
-  function handleAddCommentClick() {
+  const onAddCommentClick = () => {
     if (commentsTextareaRef.current) {
       const comment = commentsTextareaRef.current.value;
       if (comment.length !== 0) {
@@ -79,7 +75,7 @@ export const CardModal: FC<CardModalProps> = (props) => {
       }
       closeCommentsArea();
     }
-  }
+  };
 
   const onEditTitleClick = () => {
     if (titleTextareaRef.current) {
@@ -103,7 +99,11 @@ export const CardModal: FC<CardModalProps> = (props) => {
     <>
       <Modal closeModal={closeModal}>
         {!showTitleArea && (
-          <h3 className="card-modal__title" onClick={openTitleArea}>
+          <h3
+            className="card-modal__title"
+            tabIndex={0}
+            onClick={openTitleArea}
+          >
             {cardTitle}
           </h3>
         )}
@@ -119,7 +119,9 @@ export const CardModal: FC<CardModalProps> = (props) => {
         )}
         <p className="card-modal__text">
           In the column: <span>{columnTitle}</span>
-          <span>Card creator: {userName}</span>
+          <span className="card-modal__text-creator">
+            Card creator: {userName ? userName : "Anonymous"}
+          </span>
         </p>
 
         <div className="card-modal__description">
@@ -132,9 +134,9 @@ export const CardModal: FC<CardModalProps> = (props) => {
                 tabIndex={0}
               >
                 <span className="card-modal__fake-description">
-                  {description.length === 0
-                    ? "Enter the description"
-                    : description}
+                  {description && description.length > 0
+                    ? description
+                    : "Enter the description"}
                 </span>
               </div>
             </>
@@ -144,7 +146,7 @@ export const CardModal: FC<CardModalProps> = (props) => {
             <>
               <Textarea
                 text={"Add a description"}
-                add={handleAddDescriptionClick}
+                add={onAddDescriptionClick}
                 close={closeDescriptionArea}
                 placeholder={"Enter the description"}
                 defaultValue={description}
@@ -173,7 +175,7 @@ export const CardModal: FC<CardModalProps> = (props) => {
             <>
               <Textarea
                 text={"Add a comment"}
-                add={handleAddCommentClick}
+                add={onAddCommentClick}
                 close={closeCommentsArea}
                 placeholder={"Enter the comment"}
                 textareaRef={commentsTextareaRef}
@@ -194,10 +196,10 @@ export const CardModal: FC<CardModalProps> = (props) => {
             ))}
           </div>
         </div>
-
-        <Button text={"Delete a card"} onClick={onDeleteCardClick} />
+        <div className="card-modal__delete">
+          <Button text={"Delete a card"} onClick={onDeleteCardClick} />
+        </div>
       </Modal>
     </>
   );
 };
-export default CardModal;

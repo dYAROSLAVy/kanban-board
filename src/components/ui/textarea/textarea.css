@@ -15,3 +15,8 @@
 .textarea::placeholder {
   color: #000000;
 }
+
+textarea:hover,
+textarea:focus {
+  background-color: #f5f5f5;
+}

@@ -1,22 +1,20 @@
 import { Button } from "../button/button";
-import CloseBtn from "../close-btn/close-btn";
+import { FC } from "react";
+import { CloseBtn } from "../close-btn/close-btn";
 import "./add-and-close-btns.css";
 
-function AddAndCloseBtns({
-  close,
-  add,
-  text,
-}: {
+export type AddAndCloseBtnsProps = {
   close?: () => void;
   add?: () => void;
   text?: string;
-}) {
+};
+
+export const AddAndCloseBtns: FC<AddAndCloseBtnsProps> = (props) => {
+  const { text, add, close } = props;
   return (
     <div className="buttons-wrapper">
       <Button onClick={add} text={text} />
       <CloseBtn close={close} />
     </div>
   );
-}
-
-export default AddAndCloseBtns;
+};
