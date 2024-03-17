@@ -4,7 +4,18 @@ import { AddCard } from "../add-card/add-card";
 import { FC, useState, useRef, ElementRef } from "react";
 import { ColumnType } from "./types";
 import { Textarea } from "../textarea/textarea";
-import { setCardToLocalStorage } from "../../utils/local-storage";
+// import { setCardToLocalStorage } from "../../../utils/local-storage";
+
+import { useDispatch } from "react-redux";
+import {
+  addCard,
+  deleteCard,
+  editCardTitle,
+  addDescriptionToCard,
+  addCommentToCard,
+  deleteCommentFromCard,
+  editCommentFromCard,
+} from "../../../store/columns/columnSlice";
 
 export type ColumnProps = ColumnType & {
   userName: string;
@@ -14,10 +25,9 @@ export type ColumnProps = ColumnType & {
 
 export const Column: FC<ColumnProps> = (props) => {
   const { cards, userName, columnTitle, columnIndex, addColumnTitle } = props;
-  const [columnCards, setColumnCards] = useState(cards);
   const [showColumnTitleArea, setShowColumnTextArea] = useState(false);
-
   const columnTitleTextareaRef = useRef<ElementRef<"textarea">>(null);
+  const dispatch = useDispatch();
 
   const openColumnTitleArea = () => {
     setShowColumnTextArea(true);
@@ -37,56 +47,56 @@ export const Column: FC<ColumnProps> = (props) => {
     }
   };
 
-  const addCard = (cardTitle: string) => {
-    const newCards = [...columnCards, { cardTitle, comments: [] }];
-    setColumnCards(newCards);
-    setCardToLocalStorage(columnIndex, newCards);
+  const addCardAction = (cardTitle: string) => {
+    dispatch(addCard({ columnIndex, cardTitle }));
+    // setCardToLocalStorage(columnIndex, newCards);
   };
 
-  const deleteCard = (index: number) => {
-    const newCards = [...columnCards];
-    newCards.splice(index, 1);
-    setColumnCards(newCards);
-    setCardToLocalStorage(columnIndex, newCards);
+  const deleteCardAction = (cardIndex: number) => {
+    dispatch(deleteCard({ columnIndex, cardIndex }));
+    // setCardToLocalStorage(columnIndex, newCards);
   };
 
-  const editCardTitle = (cardIndex: number, cardTitle: string) => {
-    const newCards = [...columnCards];
-    newCards[cardIndex].cardTitle = cardTitle;
-    setColumnCards(newCards);
-    setCardToLocalStorage(columnIndex, newCards);
+  const editCardTitleActions = (cardIndex: number, cardTitle: string) => {
+    dispatch(editCardTitle({ columnIndex, cardIndex, cardTitle }));
+    // setCardToLocalStorage(columnIndex, newCards);
   };
 
-  const addDescriptionToCard = (cardIndex: number, text: string) => {
-    const newCards = [...columnCards];
-    newCards[cardIndex].description = text;
-    setColumnCards(newCards);
-    setCardToLocalStorage(columnIndex, newCards);
+  const addDescriptionToCardActions = (
+    cardIndex: number,
+    description: string
+  ) => {
+    dispatch(addDescriptionToCard({ columnIndex, cardIndex, description }));
+    // setCardToLocalStorage(columnIndex, newCards);
   };
 
-  const addCommentToCard = (cardIndex: number, text: string) => {
-    const newCards = [...columnCards];
-    newCards[cardIndex].comments.push(text);
-    setColumnCards(newCards);
-    setCardToLocalStorage(columnIndex, newCards);
+  const addCommentToCardActions = (cardIndex: number, comment: string) => {
+    dispatch(addCommentToCard({ columnIndex, cardIndex, comment }));
+    // setCardToLocalStorage(columnIndex, newCards);
   };
 
-  const deleteCommentFromCard = (cardIndex: number, commentIndex: number) => {
-    const newCards = [...columnCards];
-    newCards[cardIndex].comments.splice(commentIndex, 1);
-    setColumnCards(newCards);
-    setCardToLocalStorage(columnIndex, newCards);
+  const deleteCommentFromCardActions = (
+    cardIndex: number,
+    commentIndex: number
+  ) => {
+    dispatch(deleteCommentFromCard({ columnIndex, cardIndex, commentIndex }));
+    // setCardToLocalStorage(columnIndex, newCards);
   };
 
-  const editCommentFromCard = (
+  const editCommentFromCardActions = (
     cardIndex: number,
     commentIndex: number,
-    newText: string
+    newCommentText: string
   ) => {
-    const newCards = [...columnCards];
-    newCards[cardIndex].comments[commentIndex] = newText;
-    setColumnCards(newCards);
-    setCardToLocalStorage(columnIndex, newCards);
+    dispatch(
+      editCommentFromCard({
+        columnIndex,
+        cardIndex,
+        commentIndex,
+        newCommentText,
+      })
+    );
+    // setCardToLocalStorage(columnIndex, newCards);
   };
 
   const styles = {
@@ -116,27 +126,27 @@ export const Column: FC<ColumnProps> = (props) => {
           add={onEditTitleClick}
         />
       )}
-      {columnCards.length !== 0 && (
+      {cards.length !== 0 && (
         <div className="column__card-list">
-          {columnCards.map((card, index) => (
+          {cards.map((card, index) => (
             <Card
               key={index}
               cardIndex={index}
-              editCardTitle={editCardTitle}
-              deleteCard={deleteCard}
+              editCardTitle={editCardTitleActions}
+              deleteCard={deleteCardAction}
               {...card}
               userName={userName}
               columnTitle={columnTitle}
-              addCommentToCard={addCommentToCard}
-              deleteCommentFromCard={deleteCommentFromCard}
-              editCommentFromCard={editCommentFromCard}
-              addDescriptionToCard={addDescriptionToCard}
+              addCommentToCard={addCommentToCardActions}
+              deleteCommentFromCard={deleteCommentFromCardActions}
+              editCommentFromCard={editCommentFromCardActions}
+              addDescriptionToCard={addDescriptionToCardActions}
             />
           ))}
         </div>
       )}
 
-      <AddCard addCard={addCard} />
+      <AddCard addCard={addCardAction} />
     </div>
   );
 };
