@@ -3,8 +3,7 @@ import "./main-header.css";
 
 export type MainHeaderProps = { userName: string };
 
-export const MainHeader: FC<MainHeaderProps> = (props) => {
-  const { userName } = props;
+export const MainHeader: FC<MainHeaderProps> = ({ userName }) => {
   return (
     <header className="header">
       <span>Not Trello</span>

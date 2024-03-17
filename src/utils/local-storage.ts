@@ -1,6 +1,6 @@
-import { CardType } from "../ui/card/types";
-import { ColumnType } from "../ui/column/types";
-import COLUMNS, { Columns } from "./mocks";
+import { CardType } from "../components/ui/card/types";
+import { ColumnType } from "../components/ui/column/types";
+import COLUMNS, { Columns } from "./constants";
 
 const LOCAL_STORAGE_KEY = "not-trello";
 

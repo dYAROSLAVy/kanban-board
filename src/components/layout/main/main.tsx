@@ -1,20 +1,24 @@
 import "./main.css";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Column } from "../../ui/column/column";
-import { getData, saveDataToLocalStorage } from "../../utils/local-storage";
+// import { saveDataToLocalStorage } from "../../utils/local-storage";
+import { useSelector, useDispatch } from "react-redux";
+
+import { editColumnTitle } from "../../../store/columns/columnSlice";
+import { getColumns } from "../../../store/columns/selectors";
 
 export type MainProps = {
   userName: string;
 };
 
 export const Main: FC<MainProps> = (props) => {
-  const [columns, setColumns] = useState(() => getData());
+  const columns = useSelector(getColumns);
+
+  const dispatch = useDispatch();
 
   const addColumnTitle = (columnIndex: number, columnTitle: string) => {
-    const newColumns = [...columns];
-    newColumns[columnIndex].columnTitle = columnTitle;
-    setColumns(newColumns);
-    saveDataToLocalStorage(newColumns);
+    dispatch(editColumnTitle({ columnIndex, columnTitle }));
+    // saveDataToLocalStorage(newColumns);
   };
 
   return (
