@@ -5,8 +5,7 @@ import { FC, useState, useRef, ElementRef } from "react";
 import { ColumnType } from "./types";
 import { Textarea } from "../textarea/textarea";
 // import { setCardToLocalStorage } from "../../../utils/local-storage";
-
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../store/hooks";
 import {
   addCard,
   deleteCard,
@@ -27,7 +26,7 @@ export const Column: FC<ColumnProps> = (props) => {
   const { cards, userName, columnTitle, columnIndex, addColumnTitle } = props;
   const [showColumnTitleArea, setShowColumnTextArea] = useState(false);
   const columnTitleTextareaRef = useRef<ElementRef<"textarea">>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const openColumnTitleArea = () => {
     setShowColumnTextArea(true);
