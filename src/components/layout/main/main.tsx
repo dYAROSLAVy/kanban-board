@@ -1,9 +1,7 @@
 import "./main.css";
 import { FC } from "react";
 import { Column } from "../../ui/column/column";
-// import { saveDataToLocalStorage } from "../../utils/local-storage";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { editColumnTitle } from "../../../store/columns/columnSlice";
 import { getColumns } from "../../../store/columns/selectors";
 
@@ -12,13 +10,12 @@ export type MainProps = {
 };
 
 export const Main: FC<MainProps> = (props) => {
-  const columns = useSelector(getColumns);
+  const columns = useAppSelector(getColumns);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const addColumnTitle = (columnIndex: number, columnTitle: string) => {
     dispatch(editColumnTitle({ columnIndex, columnTitle }));
-    // saveDataToLocalStorage(newColumns);
   };
 
   return (

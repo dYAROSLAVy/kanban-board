@@ -4,9 +4,7 @@ import { AddCard } from "../add-card/add-card";
 import { FC, useState, useRef, ElementRef } from "react";
 import { ColumnType } from "./types";
 import { Textarea } from "../textarea/textarea";
-// import { setCardToLocalStorage } from "../../../utils/local-storage";
-
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../store/hooks";
 import {
   addCard,
   deleteCard,
@@ -27,7 +25,7 @@ export const Column: FC<ColumnProps> = (props) => {
   const { cards, userName, columnTitle, columnIndex, addColumnTitle } = props;
   const [showColumnTitleArea, setShowColumnTextArea] = useState(false);
   const columnTitleTextareaRef = useRef<ElementRef<"textarea">>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const openColumnTitleArea = () => {
     setShowColumnTextArea(true);
@@ -49,17 +47,14 @@ export const Column: FC<ColumnProps> = (props) => {
 
   const addCardAction = (cardTitle: string) => {
     dispatch(addCard({ columnIndex, cardTitle }));
-    // setCardToLocalStorage(columnIndex, newCards);
   };
 
   const deleteCardAction = (cardIndex: number) => {
     dispatch(deleteCard({ columnIndex, cardIndex }));
-    // setCardToLocalStorage(columnIndex, newCards);
   };
 
   const editCardTitleActions = (cardIndex: number, cardTitle: string) => {
     dispatch(editCardTitle({ columnIndex, cardIndex, cardTitle }));
-    // setCardToLocalStorage(columnIndex, newCards);
   };
 
   const addDescriptionToCardActions = (
@@ -67,12 +62,10 @@ export const Column: FC<ColumnProps> = (props) => {
     description: string
   ) => {
     dispatch(addDescriptionToCard({ columnIndex, cardIndex, description }));
-    // setCardToLocalStorage(columnIndex, newCards);
   };
 
   const addCommentToCardActions = (cardIndex: number, comment: string) => {
     dispatch(addCommentToCard({ columnIndex, cardIndex, comment }));
-    // setCardToLocalStorage(columnIndex, newCards);
   };
 
   const deleteCommentFromCardActions = (
@@ -80,7 +73,6 @@ export const Column: FC<ColumnProps> = (props) => {
     commentIndex: number
   ) => {
     dispatch(deleteCommentFromCard({ columnIndex, cardIndex, commentIndex }));
-    // setCardToLocalStorage(columnIndex, newCards);
   };
 
   const editCommentFromCardActions = (
@@ -96,7 +88,6 @@ export const Column: FC<ColumnProps> = (props) => {
         newCommentText,
       })
     );
-    // setCardToLocalStorage(columnIndex, newCards);
   };
 
   const styles = {

@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ColumnType } from "../../components/ui/column/types";
-import { getData } from "../../utils/local-storage";
+import COLUMNS from "../../utils/constants";
 
 type ColumnsState = ColumnType[];
 
-const initialState: ColumnsState = getData();
+const initialState: ColumnsState = COLUMNS;
 
 export const columnSlice = createSlice({
   name: "columns",
@@ -12,10 +12,9 @@ export const columnSlice = createSlice({
   reducers: {
     editColumnTitle: (
       state,
-      {
-        payload: { columnIndex, columnTitle },
-      }: PayloadAction<{ columnIndex: number; columnTitle: string }>
+      action: PayloadAction<{ columnIndex: number; columnTitle: string }>
     ) => {
+      const { columnIndex, columnTitle } = action.payload;
       state[columnIndex].columnTitle = columnTitle;
     },
     addCard: (
@@ -87,7 +86,8 @@ export const columnSlice = createSlice({
     ) => {
       const { columnIndex, cardIndex, commentIndex, newCommentText } =
         action.payload;
-      state[columnIndex].cards[cardIndex].comments[commentIndex] = newCommentText;
+      state[columnIndex].cards[cardIndex].comments[commentIndex] =
+        newCommentText;
     },
   },
 });
