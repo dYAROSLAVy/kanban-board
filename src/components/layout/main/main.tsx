@@ -1,7 +1,6 @@
 import "./main.css";
 import { FC } from "react";
 import { Column } from "../../ui/column/column";
-// import { saveDataToLocalStorage } from "../../utils/local-storage";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { editColumnTitle } from "../../../store/columns/columnSlice";
 import { getColumns } from "../../../store/columns/selectors";
@@ -17,7 +16,6 @@ export const Main: FC<MainProps> = (props) => {
 
   const addColumnTitle = (columnIndex: number, columnTitle: string) => {
     dispatch(editColumnTitle({ columnIndex, columnTitle }));
-    // saveDataToLocalStorage(newColumns);
   };
 
   return (
