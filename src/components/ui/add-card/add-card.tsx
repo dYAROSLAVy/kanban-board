@@ -1,10 +1,9 @@
-import { useState, useRef, ElementRef } from "react";
+import { useState } from "react";
 import { Textarea } from "../textarea/textarea";
 import { Button } from "../button/button";
 
 export const AddCard = ({ addCard }: { addCard?: (title: string) => void }) => {
   const [showArea, setShowArea] = useState(false);
-  const textareaRef = useRef<ElementRef<"textarea">>(null);
 
   const openTextArea = () => {
     setShowArea(true);
@@ -14,14 +13,11 @@ export const AddCard = ({ addCard }: { addCard?: (title: string) => void }) => {
     setShowArea(false);
   };
 
-  const onAddCardClick = () => {
-    if (textareaRef.current) {
-      const cardTitle = textareaRef.current.value;
-      if (cardTitle.length !== 0) {
-        addCard?.(cardTitle);
-        closeTextArea();
-      } else closeTextArea();
+  const onAddCardClick = (cardTitle: string) => {
+    if (cardTitle.length !== 0) {
+      addCard?.(cardTitle);
     }
+    closeTextArea();
   };
 
   return (
@@ -30,10 +26,10 @@ export const AddCard = ({ addCard }: { addCard?: (title: string) => void }) => {
       {showArea && (
         <Textarea
           placeholder={"Enter the card title"}
-          add={onAddCardClick}
+          callback={onAddCardClick}
           close={closeTextArea}
-          textareaRef={textareaRef}
           text={"Add a card"}
+          labelText={"Card title"}
         />
       )}
     </>

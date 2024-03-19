@@ -7,7 +7,6 @@ const COLUMNS: Columns = [
   { columnTitle: "Done", cards: [] },
 ];
 
-
 export type Columns = ColumnType[];
 
 export default COLUMNS;

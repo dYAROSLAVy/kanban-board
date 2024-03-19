@@ -1,7 +1,7 @@
 import "./column.css";
 import { Card } from "../card/card";
 import { AddCard } from "../add-card/add-card";
-import { FC, useState, useRef, ElementRef } from "react";
+import { FC, useState } from "react";
 import { ColumnType } from "./types";
 import { Textarea } from "../textarea/textarea";
 import { useAppDispatch } from "../../../store/hooks";
@@ -24,7 +24,6 @@ export type ColumnProps = ColumnType & {
 export const Column: FC<ColumnProps> = (props) => {
   const { cards, userName, columnTitle, columnIndex, addColumnTitle } = props;
   const [showColumnTitleArea, setShowColumnTextArea] = useState(false);
-  const columnTitleTextareaRef = useRef<ElementRef<"textarea">>(null);
   const dispatch = useAppDispatch();
 
   const openColumnTitleArea = () => {
@@ -35,14 +34,11 @@ export const Column: FC<ColumnProps> = (props) => {
     setShowColumnTextArea(false);
   };
 
-  const onEditTitleClick = () => {
-    if (columnTitleTextareaRef.current) {
-      const newTitle = columnTitleTextareaRef.current.value;
-      if (newTitle.length !== 0) {
-        addColumnTitle(columnIndex, newTitle);
-      }
-      closeColumnTitleArea();
+  const onEditTitleClick = (newTitle: string) => {
+    if (newTitle.length !== 0) {
+      addColumnTitle(columnIndex, newTitle);
     }
+    closeColumnTitleArea();
   };
 
   const addCardAction = (cardTitle: string) => {
@@ -113,8 +109,8 @@ export const Column: FC<ColumnProps> = (props) => {
           styles={styles}
           text={"Edit a title"}
           close={closeColumnTitleArea}
-          textareaRef={columnTitleTextareaRef}
-          add={onEditTitleClick}
+          callback={onEditTitleClick}
+          labelText={"Column title"}
         />
       )}
       {cards.length !== 0 && (

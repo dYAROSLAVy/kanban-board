@@ -5,16 +5,15 @@ import "./add-and-close-btns.css";
 
 export type AddAndCloseBtnsProps = {
   close?: () => void;
-  add?: () => void;
   text?: string;
 };
 
 export const AddAndCloseBtns: FC<AddAndCloseBtnsProps> = (props) => {
-  const { text, add, close } = props;
+  const { text, close } = props;
   return (
     <div className="buttons-wrapper">
-      <Button onClick={add} text={text} />
-      <CloseBtn close={close} />
+      <Button text={text} type="submit" />
+      <CloseBtn close={close} ariaLabel={"Close text field"} />
     </div>
   );
 };

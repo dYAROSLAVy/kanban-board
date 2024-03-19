@@ -1,35 +1,34 @@
 import "./page-wrapper.css";
 import { MainHeader } from "../header/main-header";
 import { Main } from "../main/main";
-import {NameModal} from "../../ui/name-modal/name-modal";
-import { ElementRef, useRef, useState } from "react";
+import { NameModal } from "../../ui/name-modal/name-modal";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { getName } from "../../../store/name/selectors";
+import { addName } from "../../../store/name/nameSlice";
 
 export const PageWrapper = () => {
   const [showModal, setShowCardModal] = useState(true);
-  const [userName, setUserName] = useState("");
 
-  const nameTextareaRef = useRef<ElementRef<"textarea">>(null);
+  const userName = useAppSelector(getName);
+
+  const dispatch = useAppDispatch();
 
   const closeModal = () => {
     setShowCardModal(false);
   };
 
-  const onAddNameClick = () => {
-    if (nameTextareaRef.current) {
-      let userNameValue = nameTextareaRef.current.value;
-      setUserName(userNameValue);
-      closeModal();
+  const onAddNameClick = (user: string) => {
+    if (user.length !== 0) {
+      dispatch(addName({ user }));
     }
+    closeModal();
   };
 
   return (
     <div className="page-wrapper">
-      {showModal && (
-        <NameModal
-          closeModal={closeModal}
-          onAddNameClick={onAddNameClick}
-          nameTextareaRef={nameTextareaRef}
-        />
+      {showModal && userName === "Anonymous" && (
+        <NameModal closeModal={closeModal} callback={onAddNameClick} />
       )}
       <MainHeader userName={userName} />
       <Main userName={userName} />

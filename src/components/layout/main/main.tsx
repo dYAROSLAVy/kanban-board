@@ -11,7 +11,6 @@ export type MainProps = {
 
 export const Main: FC<MainProps> = (props) => {
   const columns = useAppSelector(getColumns);
-
   const dispatch = useAppDispatch();
 
   const addColumnTitle = (columnIndex: number, columnTitle: string) => {

@@ -1,44 +1,55 @@
 import { AddAndCloseBtns } from "../add-and-close-btns/add-and-close-btns";
 import "./textarea.css";
 import { FC } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type FormValues = {
+  textField: string;
+};
 
 export type TextareaProps = {
   close?: () => void;
-  add?: () => void;
   text?: string;
   placeholder?: string;
-  value?: string;
   defaultValue?: string;
-  textareaRef?: React.RefObject<HTMLTextAreaElement>;
   styles?: {};
-  onChange?: React.FormEventHandler<HTMLTextAreaElement>;
+  labelText?: string;
+  callback: (text: string) => void;
 };
 
 export const Textarea: FC<TextareaProps> = (props) => {
   const {
     close,
     placeholder,
-    value,
-    onChange,
-    textareaRef,
     defaultValue,
     styles,
-    add,
     text,
+    labelText,
+    callback,
   } = props;
+
+  const { register, handleSubmit } = useForm<FormValues>();
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    callback(data.textField);
+  };
+
   return (
     <>
-      <textarea
-        className="textarea"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        ref={textareaRef}
-        defaultValue={defaultValue}
-        style={styles}
-        autoFocus
-      />
-      <AddAndCloseBtns text={text} close={close} add={add} />
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <label>
+          <span className="label">{labelText}</span>
+          <textarea
+            className="textarea"
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            style={styles}
+            autoFocus
+            {...register("textField")}
+          />
+        </label>
+        <AddAndCloseBtns text={text} close={close} />
+      </form>
     </>
   );
 };

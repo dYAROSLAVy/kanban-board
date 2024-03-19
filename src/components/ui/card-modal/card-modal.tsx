@@ -1,4 +1,4 @@
-import { useState, useRef, ElementRef, FC } from "react";
+import { useState, FC } from "react";
 import { Modal } from "../modal/modal";
 import { Comment } from "../comment/comment";
 import "./card-modal.css";
@@ -31,10 +31,6 @@ export const CardModal: FC<CardModalProps> = (props) => {
   const [showDescriptionArea, setShowDescriptionArea] = useState(false);
   const [showCommentsArea, setShowCommentsArea] = useState(false);
 
-  const titleTextareaRef = useRef<ElementRef<"textarea">>(null);
-  const descriptionTextareaRef = useRef<ElementRef<"textarea">>(null);
-  const commentsTextareaRef = useRef<ElementRef<"textarea">>(null);
-
   const openTitleArea = () => {
     setShowTitleArea(true);
   };
@@ -59,29 +55,20 @@ export const CardModal: FC<CardModalProps> = (props) => {
     setShowCommentsArea(false);
   };
 
-  const onAddDescriptionClick = () => {
-    if (descriptionTextareaRef.current) {
-      const description = descriptionTextareaRef.current.value;
-      addDescriptionToCard(cardIndex, description);
-      closeDescriptionArea();
-    }
+  const onAddDescriptionClick = (description: string) => {
+    addDescriptionToCard(cardIndex, description);
+    closeDescriptionArea();
   };
 
-  const onAddCommentClick = () => {
-    if (commentsTextareaRef.current) {
-      const comment = commentsTextareaRef.current.value;
-      if (comment.length !== 0) {
-        addCommentToCard(cardIndex, comment);
-      }
-      closeCommentsArea();
+  const onAddCommentClick = (comment: string) => {
+    if (comment.length !== 0) {
+      addCommentToCard(cardIndex, comment);
     }
+    closeCommentsArea();
   };
 
-  const onEditTitleClick = () => {
-    if (titleTextareaRef.current) {
-      const cardTitle = titleTextareaRef.current.value;
+  const onEditTitleClick = (cardTitle: string) => {
       editCardTitle(cardIndex, cardTitle);
-    }
     closeTitleArea();
   };
 
@@ -113,14 +100,13 @@ export const CardModal: FC<CardModalProps> = (props) => {
             defaultValue={cardTitle}
             styles={styles}
             text={"Edit a title"}
-            textareaRef={titleTextareaRef}
-            add={onEditTitleClick}
+            callback={onEditTitleClick}
           />
         )}
         <p className="card-modal__text">
           In the column: <span>{columnTitle}</span>
           <span className="card-modal__text-creator">
-            Card creator: {userName ? userName : "Anonymous"}
+            Card creator: {userName}
           </span>
         </p>
 
@@ -146,11 +132,10 @@ export const CardModal: FC<CardModalProps> = (props) => {
             <>
               <Textarea
                 text={"Add a description"}
-                add={onAddDescriptionClick}
+                callback={onAddDescriptionClick}
                 close={closeDescriptionArea}
                 placeholder={"Enter the description"}
                 defaultValue={description}
-                textareaRef={descriptionTextareaRef}
               />
             </>
           )}
@@ -175,10 +160,9 @@ export const CardModal: FC<CardModalProps> = (props) => {
             <>
               <Textarea
                 text={"Add a comment"}
-                add={onAddCommentClick}
+                callback={onAddCommentClick}
                 close={closeCommentsArea}
                 placeholder={"Enter the comment"}
-                textareaRef={commentsTextareaRef}
               />
             </>
           )}

@@ -1,6 +1,6 @@
-import { useState, useRef, ElementRef, FC } from "react";
+import { useState, FC } from "react";
 import "./comment.css";
-import {Textarea} from "../textarea/textarea";
+import { Textarea } from "../textarea/textarea";
 import { Button } from "../button/button";
 import { CommentType } from "./types";
 
@@ -27,7 +27,6 @@ export const Comment: FC<CommentProps> = (props) => {
     text,
   } = props;
   const [showCommentArea, setShowCommentArea] = useState(false);
-  const commentTextareaRef = useRef<ElementRef<"textarea">>(null);
 
   const openCommentArea = () => {
     setShowCommentArea(true);
@@ -41,17 +40,16 @@ export const Comment: FC<CommentProps> = (props) => {
     deleteCommentFromCard(cardIndex, commentIndex);
   };
 
-  const onEditButtonClick = () => {
-    if (commentTextareaRef.current) {
-      const newText = commentTextareaRef.current.value;
-      editCommentFromCard(cardIndex, commentIndex, newText);
-    }
+  const onEditButtonClick = (newText: string) => {
+    editCommentFromCard(cardIndex, commentIndex, newText);
     closeCommentArea();
   };
 
   return (
     <div className="comment">
-      <span className="comment__author">{userName ? userName : "Anonymous"}</span>
+      <span className="comment__author">
+        {userName}
+      </span>
 
       {!showCommentArea && (
         <>
@@ -67,8 +65,7 @@ export const Comment: FC<CommentProps> = (props) => {
           close={closeCommentArea}
           text={"Save changes"}
           defaultValue={text}
-          add={onEditButtonClick}
-          textareaRef={commentTextareaRef}
+          callback={onEditButtonClick}
         />
       )}
     </div>
