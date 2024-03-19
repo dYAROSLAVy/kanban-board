@@ -1,11 +1,12 @@
 import { PropsWithChildren, useEffect } from "react";
-import {CloseBtn} from "../close-btn/close-btn";
+import { CloseBtn } from "../close-btn/close-btn";
 import "./modal.css";
 
 export const Modal = ({
   closeModal,
   children,
-}: PropsWithChildren<{ closeModal: () => void }>) => {
+  ariaLabel,
+}: PropsWithChildren<{ closeModal: () => void; ariaLabel?: string }>) => {
   useEffect(() => {
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
@@ -25,7 +26,7 @@ export const Modal = ({
     <div className="modal">
       <div className="modal__inner">
         <div className="modal__close">
-          <CloseBtn close={closeModal} />
+          <CloseBtn close={closeModal} ariaLabel={ariaLabel} />
         </div>
         {children}
       </div>

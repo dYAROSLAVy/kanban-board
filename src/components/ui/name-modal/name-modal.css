@@ -10,5 +10,9 @@
 }
 
 .name-modal textarea {
-    height: 42px;
+  height: 42px;
+}
+
+.name-modal .buttons-wrapper {
+  margin: 15px auto 0;
 }

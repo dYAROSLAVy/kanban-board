@@ -1,25 +1,23 @@
 import { Modal } from "../modal/modal";
-import {Textarea} from "../textarea/textarea";
+import { Textarea } from "../textarea/textarea";
 import "./name-modal.css";
 
 export const NameModal = ({
   closeModal,
-  onAddNameClick,
-  nameTextareaRef,
+  callback,
 }: {
   closeModal: () => void;
-  onAddNameClick: () => void;
-  nameTextareaRef: React.RefObject<HTMLTextAreaElement>;
+  callback: (name: string) => void;
 }) => {
   return (
     <div className="name-modal">
-      <Modal closeModal={closeModal}>
+      <Modal closeModal={closeModal} ariaLabel={"Close name modal"}>
         <h2>Enter your name</h2>
         <Textarea
-          add={onAddNameClick}
           close={closeModal}
           text={"Add a name"}
-          textareaRef={nameTextareaRef}
+          labelText={"Your name"}
+          callback={callback}
         ></Textarea>
       </Modal>
     </div>
