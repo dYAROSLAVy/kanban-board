@@ -2,31 +2,25 @@ import { useState, FC } from "react";
 import "./comment.css";
 import { Textarea } from "../textarea/textarea";
 import { Button } from "../button/button";
-import { CommentType } from "./types";
+import { CommentType } from "../../../utils/types";
+import { useAppDispatch } from "../../../store/hooks";
+import {
+  deleteCommentFromCard,
+  editCommentFromCard,
+} from "../../../store/columns/columnSlice";
 
 export type CommentProps = {
   cardIndex: number;
   commentIndex: number;
+  columnIndex: number;
   userName: string;
-  deleteCommentFromCard: (cardIndex: number, commentIndex: number) => void;
-  editCommentFromCard: (
-    cardIndex: number,
-    commentIndex: number,
-    newText: string
-  ) => void;
   text: CommentType;
 };
 
-export const Comment: FC<CommentProps> = (props) => {
-  const {
-    deleteCommentFromCard,
-    editCommentFromCard,
-    cardIndex,
-    commentIndex,
-    userName,
-    text,
-  } = props;
+export const Comment: FC<CommentProps> = ({ cardIndex, commentIndex, userName, columnIndex, text }) => {
   const [showCommentArea, setShowCommentArea] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const openCommentArea = () => {
     setShowCommentArea(true);
@@ -37,19 +31,24 @@ export const Comment: FC<CommentProps> = (props) => {
   };
 
   const onDeleteButtonClick = () => {
-    deleteCommentFromCard(cardIndex, commentIndex);
+    dispatch(deleteCommentFromCard({ columnIndex, cardIndex, commentIndex }));
   };
 
-  const onEditButtonClick = (newText: string) => {
-    editCommentFromCard(cardIndex, commentIndex, newText);
+  const onEditButtonClick = (newCommentText: string) => {
+    dispatch(
+      editCommentFromCard({
+        columnIndex,
+        cardIndex,
+        commentIndex,
+        newCommentText,
+      })
+    );
     closeCommentArea();
   };
 
   return (
     <div className="comment">
-      <span className="comment__author">
-        {userName}
-      </span>
+      <span className="comment__author">{userName}</span>
 
       {!showCommentArea && (
         <>

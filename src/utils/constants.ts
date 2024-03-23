@@ -1,4 +1,4 @@
-import { ColumnType } from "../components/ui/column/types";
+import { ColumnType } from "./types";
 
 const COLUMNS: Columns = [
   { columnTitle: "To do", cards: [] },

@@ -1,14 +1,13 @@
-import { Modal } from "../modal/modal";
+import { FC } from "react";
+import { Modal, ModalProps } from "../modal/modal";
 import { Textarea } from "../textarea/textarea";
 import "./name-modal.css";
 
-export const NameModal = ({
-  closeModal,
-  callback,
-}: {
-  closeModal: () => void;
+export type NameModalProps = ModalProps & {
   callback: (name: string) => void;
-}) => {
+};
+
+export const NameModal: FC<NameModalProps> = ({ closeModal, callback }) => {
   return (
     <div className="name-modal">
       <Modal closeModal={closeModal} ariaLabel={"Close name modal"}>
