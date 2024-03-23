@@ -20,7 +20,7 @@ export const PageWrapper = () => {
 
   const onAddNameClick = (user: string) => {
     if (user.length !== 0) {
-      dispatch(addName({ user }));
+      dispatch(addName(user));
     }
     closeModal();
   };

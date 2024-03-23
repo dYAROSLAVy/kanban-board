@@ -17,17 +17,15 @@ export type TextareaProps = {
   callback: (text: string) => void;
 };
 
-export const Textarea: FC<TextareaProps> = (props) => {
-  const {
-    close,
-    placeholder,
-    defaultValue,
-    styles,
-    text,
-    labelText,
-    callback,
-  } = props;
-
+export const Textarea: FC<TextareaProps> = ({
+  close,
+  placeholder,
+  defaultValue,
+  styles,
+  text,
+  labelText,
+  callback,
+}) => {
   const { register, handleSubmit } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {

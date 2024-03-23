@@ -1,5 +1,6 @@
 import { FC } from "react";
 import "./main-header.css";
+
 export type MainHeaderProps = {  userName: string };
 
 export const MainHeader: FC<MainHeaderProps> = ({ userName }) => {

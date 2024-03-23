@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ColumnType } from "../../components/ui/column/types";
+import { ColumnType } from "../../utils/types";
 import COLUMNS from "../../utils/constants";
 
 type ColumnsState = ColumnType[];

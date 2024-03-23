@@ -7,8 +7,7 @@ export type ButtonProps = {
   onClick?: (evt: MouseEvent<HTMLButtonElement>) => void;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const Button: FC<ButtonProps> = (props) => {
-  const { onClick, styles, text, type = "button" } = props;
+export const Button: FC<ButtonProps> = ({ onClick, styles, text, type = "button" }) => {
   return (
     <button className="button" onClick={onClick} style={styles} type={type}>
       <span className="buttons-wrapper__add-text">{text}</span>

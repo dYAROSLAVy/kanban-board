@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Textarea } from "../textarea/textarea";
 import { Button } from "../button/button";
+import { useAppDispatch } from "../../../store/hooks";
+import { addCard } from "../../../store/columns/columnSlice";
 
-export const AddCard = ({ addCard }: { addCard?: (title: string) => void }) => {
+export type AddCardProps = {
+  columnIndex: number;
+};
+
+export const AddCard: FC<AddCardProps> = ({ columnIndex }) => {
   const [showArea, setShowArea] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const openTextArea = () => {
     setShowArea(true);
@@ -15,7 +23,7 @@ export const AddCard = ({ addCard }: { addCard?: (title: string) => void }) => {
 
   const onAddCardClick = (cardTitle: string) => {
     if (cardTitle.length !== 0) {
-      addCard?.(cardTitle);
+      dispatch(addCard({ columnIndex, cardTitle }));
     }
     closeTextArea();
   };

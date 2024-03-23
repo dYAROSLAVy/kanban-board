@@ -8,8 +8,7 @@ export type AddAndCloseBtnsProps = {
   text?: string;
 };
 
-export const AddAndCloseBtns: FC<AddAndCloseBtnsProps> = (props) => {
-  const { text, close } = props;
+export const AddAndCloseBtns: FC<AddAndCloseBtnsProps> = ({ text, close } ) => {
   return (
     <div className="buttons-wrapper">
       <Button text={text} type="submit" />

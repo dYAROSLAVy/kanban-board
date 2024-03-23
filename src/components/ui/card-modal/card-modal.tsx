@@ -5,31 +5,33 @@ import "./card-modal.css";
 import { Textarea } from "../textarea/textarea";
 import { CardProps } from "../card/card";
 import { Button } from "../button/button";
+import { useAppDispatch } from "../../../store/hooks";
+import {
+  deleteCard,
+  editCardTitle,
+  addDescriptionToCard,
+  addCommentToCard,
+} from "../../../store/columns/columnSlice";
 
 export type CardModalProps = CardProps & {
   closeModal: () => void;
 };
 
-export const CardModal: FC<CardModalProps> = (props) => {
-  const {
-    cardTitle,
-    closeModal,
-    cardIndex,
-    addCommentToCard,
-    addDescriptionToCard,
-    deleteCommentFromCard,
-    editCommentFromCard,
-    editCardTitle,
-    deleteCard,
-    columnTitle,
-    userName,
-    comments,
-    description,
-  } = props;
-
+export const CardModal: FC<CardModalProps> = ({
+  cardTitle,
+  closeModal,
+  cardIndex,
+  columnTitle,
+  userName,
+  comments,
+  description,
+  columnIndex,
+}) => {
   const [showTitleArea, setShowTitleArea] = useState(false);
   const [showDescriptionArea, setShowDescriptionArea] = useState(false);
   const [showCommentsArea, setShowCommentsArea] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const openTitleArea = () => {
     setShowTitleArea(true);
@@ -56,24 +58,25 @@ export const CardModal: FC<CardModalProps> = (props) => {
   };
 
   const onAddDescriptionClick = (description: string) => {
-    addDescriptionToCard(cardIndex, description);
+    dispatch(addDescriptionToCard({ columnIndex, cardIndex, description }));
     closeDescriptionArea();
   };
 
   const onAddCommentClick = (comment: string) => {
     if (comment.length !== 0) {
-      addCommentToCard(cardIndex, comment);
+      dispatch(addCommentToCard({ columnIndex, cardIndex, comment }));
     }
     closeCommentsArea();
   };
 
   const onEditTitleClick = (cardTitle: string) => {
-      editCardTitle(cardIndex, cardTitle);
+    dispatch(editCardTitle({ columnIndex, cardIndex, cardTitle }));
     closeTitleArea();
   };
 
   const onDeleteCardClick = () => {
-    deleteCard(cardIndex);
+    dispatch(deleteCard({ columnIndex, cardIndex }));
+    closeModal();
   };
 
   const styles = {
@@ -174,8 +177,7 @@ export const CardModal: FC<CardModalProps> = (props) => {
                 commentIndex={index}
                 text={comment}
                 userName={userName}
-                deleteCommentFromCard={deleteCommentFromCard}
-                editCommentFromCard={editCommentFromCard}
+                columnIndex={columnIndex}
               />
             ))}
           </div>

@@ -1,12 +1,17 @@
-import { PropsWithChildren, useEffect } from "react";
+import { FC, PropsWithChildren, useEffect } from "react";
 import { CloseBtn } from "../close-btn/close-btn";
 import "./modal.css";
 
-export const Modal = ({
+export type ModalProps = {
+  closeModal: () => void;
+  ariaLabel?: string;
+};
+
+export const Modal: FC<PropsWithChildren<ModalProps>> = ({
   closeModal,
   children,
   ariaLabel,
-}: PropsWithChildren<{ closeModal: () => void; ariaLabel?: string }>) => {
+}) => {
   useEffect(() => {
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
